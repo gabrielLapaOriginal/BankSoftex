@@ -1,0 +1,10 @@
+[
+  {
+    "id": "Gb2oYFAKJW",
+    "nome": "Bob",
+    "cartao": "3670465574380658",
+    "tipoCartao": "debito",
+    "bloqueado": false,
+    "limite": 3000
+  }
+]
