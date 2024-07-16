@@ -1,8 +1,12 @@
 const readlineSync = require('readline-sync');
 const { calcularPorquinho } = require('./porquinho'); 
-//const { tCadastro } = require('./cadastro');
+const { solicitarEmprestimo } = require('./emprestimo');
+// const { tCadastro } = require('./cadastro');
 const {} = require('./users.json');
 const { transferirLimite } = require('./transferBank');
+// const { visSaldo } = require('./visualizarSaldo');
+const { credito, aumentarLimite } = require('./limite')
+
 
 function bigSpacing() {
     console.log("\n".repeat(8)); 
@@ -26,6 +30,10 @@ function exibirOperacoesBasicas() {
 
             const produtosServicos = Number(readlineSync.question("Digite o número do que desejar: "));
             switch (produtosServicos) {
+                case 4:
+                smallSpacing();
+                visSaldo();
+                break
                 case 6:
                 smallSpacing()
                 transferirLimite();
@@ -51,6 +59,9 @@ function exibirProdutosEServicos() {
 
     const produtosServicos = Number(readlineSync.question("Digite o número do que desejar: "));
     switch (produtosServicos) {
+        case 1:
+            solicitarEmprestimo(); // Chama a função de empréstimo
+            break;
         case 5:
             smallSpacing()
             calcularPorquinho(); // Chama a função do porquinho
@@ -75,10 +86,22 @@ function exibirAutoAtendimento() {
 function exibirOutrasFuncionalidades() {
     bigSpacing();
     console.log("Outras Funcionalidades: \n" +
-                "1- Gerenciamento de Limites \n" +
+                "1- Gerenciamento de Limites \n" + 
                 "2- Investimentos \n" +
                 "3- Alertas e Notificações \n" +
                 "4- Personalização do App");
+                
+                const outrasFuncionalidades = Number(readlineSync.question("Digite o número do que desejar: "));
+            switch (outrasFuncionalidades) {
+                case 1:
+                smallSpacing()
+                aumentarLimite();
+                break;
+        // Outros casos para produtos e serviços...
+            default:
+                console.log("Opção inválida.");
+            break;
+    }
 }
 
 // Função principal para exibir o menu e processar a entrada do usuário
@@ -129,4 +152,3 @@ categoria();
 //     }
 // }
 // Inicial();
-

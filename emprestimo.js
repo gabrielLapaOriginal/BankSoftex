@@ -1,20 +1,26 @@
 const readlineSync = require('readline-sync');
 
 function calcularValorEmprestimo(depositos) {
-    // Média dos depósitos dos últimos 6 meses
+    // Calculo de média dos depósitos dos últimos 6 meses
     const somaDepositos = depositos.reduce((acc, curr) => acc + curr, 0);
     const mediaDepositos = somaDepositos / depositos.length;
 
-    // Valor do empréstimo (70% da média dos depósitos)
-    const valorEmprestimo = mediaDepositos * 0.7;
+    // Valor do empréstimo (200% da média dos depósitos)
+    const valorEmprestimo = mediaDepositos * 2;
     return valorEmprestimo;
 }
 
-function calcularParcelasEmprestimo(valorEmprestimo, meses) {
-    const taxaJurosMensal = 7; // Taxa de juros fixa de 7% ao mês, média dos bancos em 2023.
-    const valorTotalComJuros = valorEmprestimo * Math.pow(1 + taxaJurosMensal / 100, meses);
-    const valorParcelaMensal = valorTotalComJuros / meses;
-    return valorParcelaMensal;
+function calcularParcelas(valorEmprestimo, valorParcelaMensal) {
+    const taxaJurosMensal = 7 / 100; // Taxa de juros fixa de 7% ao mês, baseado na media de juros dos bancos em 2023
+    let meses = 0;
+    let saldoDevedor = valorEmprestimo;
+
+    while (saldoDevedor > 0) {
+        saldoDevedor += saldoDevedor * taxaJurosMensal - valorParcelaMensal;
+        meses++;
+    }
+
+    return meses;
 }
 
 function solicitarDepositos() {
@@ -32,11 +38,13 @@ function solicitarEmprestimo() {
 
     console.log(`\nCom base nos seus depósitos, você pode pegar um empréstimo de até R$ ${valorEmprestimo.toFixed(2)}`);
 
-    const meses = parseInt(readlineSync.question('Em quantos meses você deseja pagar o empréstimo? '));
+    const valorParcelaMensal = parseFloat(readlineSync.question('Quanto você pode pagar por mês? R$ '));
 
-    const valorParcelaMensal = calcularParcelasEmprestimo(valorEmprestimo, meses);
+    const meses = calcularParcelas(valorEmprestimo, valorParcelaMensal);
 
-    console.log(`\nO valor das parcelas mensais será de R$ ${valorParcelaMensal.toFixed(2)} por ${meses} meses.`);
+    console.log(`\nCom um pagamento mensal de R$ ${valorParcelaMensal.toFixed(2)}, você levará aproximadamente ${meses} meses para pagar o empréstimo com juros inclusos.`);
 }
 
-solicitarEmprestimo();
+module.exports = {
+    solicitarEmprestimo
+};
