@@ -16,13 +16,13 @@ function transferirLimite() {
     usuarioDestino = userData.find((usuario) => usuario.cpf === cpfDestino);
   
     // Validar se os usuários existem e se o valor é válido
-    if (!usuarioOrigem || !usuarioDestino || valor <= 0 || valor > usuarioOrigem.limite) {
+    if (!usuarioOrigem || !usuarioDestino || valor <= 0 || valor > usuarioOrigem.saldo) {
       console.error('Transferência inválida!');
     }
   
     // Atualizar saldos dos usuários
-    usuarioOrigem.limite -= valor;
-    usuarioDestino.limite += valor;
+    usuarioOrigem.saldo -= valor;
+    usuarioDestino.saldo += valor;
   
     // Salvar alterações no arquivo JSON
     fs.writeFileSync('users.json', JSON.stringify(userData));

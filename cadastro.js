@@ -36,19 +36,19 @@ function generateCreditCardNumber () {
 //classe de usuarios
 class Users {
     
-    constructor(nome, tipoCartao, limite){
+    constructor(nome, tipoCartao, limite, cpf){
         this.id = GerarIdAleatorio();
         this.nome = nome;
         this.cartao = generateCreditCardNumber();
         this.tipoCartao = tipoCartao;
-        this.bloqueado = false;
+        this.cpf = cpf;
         this.limite = limite;
+        this.saldo = saldo;
     }
 }
 //cadastra usuario novo
-function cadastroUsuario (nome, tipoCartao, limiteInicial) {
-    const newUser = new Users(nome, tipoCartao, limiteInicial);
-
+function cadastroUsuario (nome, tipoCartao, limiteInicial, cpf, saldo) {
+    const newUser = new Users(nome, tipoCartao, limiteInicial, cpf, saldo);
    
     fs.readFile(path, 'utf8', (err, data) => {
         let users = [];
