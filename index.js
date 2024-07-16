@@ -1,5 +1,8 @@
 const readlineSync = require('readline-sync');
 const { calcularPorquinho } = require('./porquinho'); 
+//const { tCadastro } = require('./cadastro');
+const {} = require('./users.json');
+const { transferirLimite } = require('./transferBank');
 
 function bigSpacing() {
     console.log("\n".repeat(8)); 
@@ -18,7 +21,20 @@ function exibirOperacoesBasicas() {
                 "3- Pagamento de Contas \n" +
                 "4- Visualização de Saldo \n" +
                 "5- Tipo de Conta (corrente e salário) \n" +
-                "6- Histórico de Transações");
+                "6- Transferencia Bancaria \n" +
+                "7- Histórico de Transações");
+
+            const produtosServicos = Number(readlineSync.question("Digite o número do que desejar: "));
+            switch (produtosServicos) {
+                case 6:
+                smallSpacing()
+                transferirLimite();
+                break;
+        // Outros casos para produtos e serviços...
+            default:
+                console.log("Opção inválida.");
+            break;
+    }
 }
 
 // Função para exibir opções de produtos e serviços
@@ -36,6 +52,7 @@ function exibirProdutosEServicos() {
     const produtosServicos = Number(readlineSync.question("Digite o número do que desejar: "));
     switch (produtosServicos) {
         case 5:
+            smallSpacing()
             calcularPorquinho(); // Chama a função do porquinho
             break;
         // Outros casos para produtos e serviços...
@@ -93,3 +110,23 @@ function categoria() {
 }
 
 categoria();
+
+////Função da primeira "tela", falta loguin.js
+// function Inicial(){
+//     bigSpacing();
+//     let escolha = Numer(readlineSync(`Bem Vindo ao Banco Softex. \n
+//         Para continuar é preciso estar logado.\n
+//         Realize seu loguin, ou crie um novo cadastro selecionando uma das opções abaixo:\n
+//         1. Loguin\n
+//         2. Cadastro`))
+//     switch(escolha){
+//         case 1:
+//              //loguin
+//              break;
+//         case 2:
+//             tCadastro();
+//             break;
+//     }
+// }
+// Inicial();
+

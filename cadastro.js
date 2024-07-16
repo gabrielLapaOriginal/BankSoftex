@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = './users.json';
+const { readlineSync } = require('./index');
 
 const userIds = {};
 
@@ -35,19 +36,19 @@ function generateCreditCardNumber () {
 //classe de usuarios
 class Users {
     
-    constructor(nome, tipoCartao, limite){
+    constructor(nome, tipoCartao, limite, cpf){
         this.id = GerarIdAleatorio();
         this.nome = nome;
         this.cartao = generateCreditCardNumber();
         this.tipoCartao = tipoCartao;
-        this.bloqueado = false;
+        this.cpf = cpf;
         this.limite = limite;
+        this.saldo = saldo;
     }
 }
 //cadastra usuario novo
-function cadastroUsuario (nome, tipoCartao, limiteInicial) {
-    const newUser = new Users(nome, tipoCartao, limiteInicial);
-
+function cadastroUsuario (nome, tipoCartao, limiteInicial, cpf, saldo) {
+    const newUser = new Users(nome, tipoCartao, limiteInicial, cpf, saldo);
    
     fs.readFile(path, 'utf8', (err, data) => {
         let users = [];
@@ -72,16 +73,61 @@ function cadastroUsuario (nome, tipoCartao, limiteInicial) {
     })
 }
 
-//recuperando os usuarios
+
 function recuperarUsuarios(){
     fs.readFile(path, 'utf8', (err, data) =>{
         if (err) {
             console.error('Erro ao ler o arquivo:', err);
             return
         }
-
-        const users = JSON.parse(data);
-        console.log(users);
+        let users = JSON.parse(data);
+        ////debug
+        //console.log(users); 
+        return users;
     });
 }
-recuperarUsuarios();
+//recuperarUsuarios();
+
+
+//verificando se usuario existe
+function usuarioExiste(nome){
+    let users = recuperarUsuarios();
+    users.forEach(user =>{
+        //para cada objeto no array de objetos verifica se nome já existe
+        if (Object.keys(user,"nome") == nome){
+            return true;
+        }
+    })
+    return false;
+}
+
+//terminal de cadastro
+function tCadastro(){
+    const nome = String(readlineSync(`Área de cadastro de novos clientes\n
+        Vamos começar a nos conhecer, por favor digite seu nome:\n`))
+    let tipoCartao = Number(readlineSync(`Informe o tipo de cartão para sua conta:\n
+        1. Crédito\n
+        2. Débito\n`))
+
+    switch (tipoCartao){
+        case 1:
+            tipoCartao = "credito";
+            break;
+        case 2:
+            tipoCartao = "debito";
+            break;
+    }
+    const limite = (Number(readlineSync(`\nÓtimo, seja bem vindo ${nome}.
+        \nSua nova conta de ${tipoCartao} está quase pronta...
+        \nMas primeiro precisamos saber, qual a sua renda salarial mensal?`))*4)
+
+    if (usuarioExiste(nome)){
+        console.log(`\nLamentamos, o usuário ${nome} já possui conta no nosso sistema\nOperação Finalizada`)
+        //TO DO: sistema de retornar
+    }else{
+        cadastroUsuario(nome, tipoCartao, limite)
+    }
+}
+tCadastro()
+
+
