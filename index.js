@@ -1,6 +1,6 @@
 const readlineSync = require('readline-sync');
 const { calcularPorquinho } = require('./porquinho'); 
-const {} = require('./cadastro');
+//const { tCadastro } = require('./cadastro');
 const {} = require('./users.json');
 const { transferirLimite } = require('./transferBank');
 
@@ -110,4 +110,23 @@ function categoria() {
 }
 
 categoria();
+
+////Função da primeira "tela", falta loguin.js
+// function Inicial(){
+//     bigSpacing();
+//     let escolha = Numer(readlineSync(`Bem Vindo ao Banco Softex. \n
+//         Para continuar é preciso estar logado.\n
+//         Realize seu loguin, ou crie um novo cadastro selecionando uma das opções abaixo:\n
+//         1. Loguin\n
+//         2. Cadastro`))
+//     switch(escolha){
+//         case 1:
+//              //loguin
+//              break;
+//         case 2:
+//             tCadastro();
+//             break;
+//     }
+// }
+// Inicial();
 
