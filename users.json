@@ -1,18 +1,1 @@
-[
-    {
-    "id":"Gb2oYFAKJW",
-    "nome":"Bob",
-    "cartao":"3670465574380658",
-    "tipoCartao":"debito",
-    "bloqueado":false,
-    "limite":4920
-    },
-    {
-    "id":"ukIcZpX2c8",
-    "nome":"William",
-    "cartao":"0868497450362297",
-    "tipoCartao":"debito",
-    "bloqueado":false,
-    "limite":5782
-    }
-]
+[{"id":"Gb2oYFAKJW","nome":"Bob","cartao":"3670465574380658","tipoCartao":"debito","bloqueado":false,"limite":4920},{"id":"ukIcZpX2c8","nome":"William","cartao":"0868497450362297","tipoCartao":"debito","cpf":"12345678912","limite":5982},{"id":"xG31t2YhD9","nome":"Gabriel","cartao":"3353312630641964","tipoCartao":"debito","cpf":"09256678462","limite":1800}]

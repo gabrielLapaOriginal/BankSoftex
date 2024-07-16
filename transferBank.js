@@ -7,13 +7,13 @@ function transferirLimite() {
     const userData = JSON.parse(fs.readFileSync('users.json'));
 
     // Receber os valores
-    const idOrigem = readlineSync.question(`Digite o seu id: `)
-    const idDestino = readlineSync.question(`Digite o id pra qual ira enviar o dinheiro: `)
+    const cpfOrigem = readlineSync.question(`Digite o seu cpf: `)
+    const cpfDestino = readlineSync.question(`Digite o cpf pra qual ira enviar o dinheiro: `)
     const valor = Number(readlineSync.question("Digite o valor da transferencia: "))
     
     // Procurar os usuários no json
-    usuarioOrigem = userData.find((usuario) => usuario.id === idOrigem);
-    usuarioDestino = userData.find((usuario) => usuario.id === idDestino);
+    usuarioOrigem = userData.find((usuario) => usuario.cpf === cpfOrigem);
+    usuarioDestino = userData.find((usuario) => usuario.cpf === cpfDestino);
   
     // Validar se os usuários existem e se o valor é válido
     if (!usuarioOrigem || !usuarioDestino || valor <= 0 || valor > usuarioOrigem.limite) {
