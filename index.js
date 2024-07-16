@@ -1,6 +1,7 @@
 const readlineSync = require('readline-sync');
 const { calcularPorquinho } = require('./porquinho'); 
 const { solicitarEmprestimo } = require('./emprestimo');
+const { solicitarDeposito } = require('./poupanca');
 // const { tCadastro } = require('./cadastro');
 const {} = require('./users.json');
 const { transferirLimite } = require('./transferBank');
@@ -61,6 +62,9 @@ function exibirProdutosEServicos() {
     switch (produtosServicos) {
         case 1:
             solicitarEmprestimo(); // Chama a função de empréstimo
+            break;
+        case 2:
+            solicitarDeposito(); // Chama a função de poupança
             break;
         case 5:
             smallSpacing()
