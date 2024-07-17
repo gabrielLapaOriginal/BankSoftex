@@ -1,1 +1,28 @@
-[{"id":"ukIcZpX2c8","nome":"William","cartao":"0868497450362297","tipoCartao":"credito","cpf":"12345678912","limite":2000,"saldo":2000},{"id":"xG31t2YhD9","nome":"Gabriel","cartao":"3353312630641964","tipoCartao":"debito","cpf":"09256678462","limite":0,"saldo":2000,"historicoDeDeposito":[2000,1000,3000,5000,4000,2000]}]
+[
+    {
+        "id": "ukIcZpX2c8",
+        "nome": "William",
+        "cartao": "0868497450362297",
+        "tipoCartao": "credito",
+        "cpf": "12345678912",
+        "limite": 2000,
+        "saldo": 2000
+    },
+    {
+        "id": "xG31t2YhD9",
+        "nome": "Gabriel",
+        "cartao": "3353312630641964",
+        "tipoCartao": "debito",
+        "cpf": "09256678462",
+        "limite": 0,
+        "saldo": 2000,
+        "historicoDeDeposito": [
+            2000,
+            1000,
+            3000,
+            5000,
+            4000,
+            2000
+        ]
+    }
+]

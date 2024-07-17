@@ -5,8 +5,9 @@ const { solicitarDeposito } = require('./poupanca');
 // const { tCadastro } = require('./cadastro');
 const {} = require('./users.json');
 const { transferirLimite } = require('./transferBank');
-// const { visSaldo } = require('./visualizarSaldo');
+const { visSaldo } = require('./visualizarSaldo');
 const { credito, aumentarLimite } = require('./limite')
+const { saque, deposito } = require('./saque.js')
 
 
 function bigSpacing() {
@@ -31,9 +32,15 @@ function exibirOperacoesBasicas() {
 
             const produtosServicos = Number(readlineSync.question("Digite o número do que desejar: "));
             switch (produtosServicos) {
+                case 1:
+                saque(); //precisa de uma variavel para o parametro com o id do usuario logado
+                break
+                case 2:
+                deposito(); //precisa de uma variavel para o parametro com o id do usuario logado
+                break
                 case 4:
                 smallSpacing();
-                visSaldo();
+                visSaldo(); //precisa de uma variavel para o parametro com o id do usuario logado
                 break
                 case 6:
                 smallSpacing()

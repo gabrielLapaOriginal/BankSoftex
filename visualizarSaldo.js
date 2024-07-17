@@ -1,20 +1,14 @@
 const readlineSync = require('readline-sync');
-const { recuperarUsuarios } = require('./cadastro');
+const fs = require('fs');
 
-function visSaldo(){
-    //provavelmenre isso tudo vaiser mudado depois mas talvez não
-    users = recuperarUsuarios()
-    //requer variável token usada abaixo
-    users.forEach(user =>{
-        //para cada objeto no array de objetos verifica se cpf == token
-        if (Object.keys(user,"cpf") == token){
-            console.log(`Olá ${String(Object.keys(user,"nome"))}, seu saldo atual é ${String(Object.keys(user,"saldo"))}`)
-        }
-    })
+function visSaldo(userId){
+    const userData = JSON.parse(fs.readFileSync('users.json'));
+    usuarioOrigem =  userData.find(usuario => usuario.id == userId)
+    console.log(`Seu saldo atual e de ${usuarioOrigem.saldo}`)
 
     //aqui quebramos o código depois
 }
-
+visSaldo('xG31t2YhD9')
 module.exports = {
     visSaldo
 }
