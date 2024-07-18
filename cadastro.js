@@ -130,3 +130,53 @@ function recuperarUsuarios(){
 // // };
 
 
+const readline = require('readline-sync');
+
+//Validar CPF
+function validarCPF(cpf) {
+    // Tira os caracteres q n forem números
+    const sanitizedCPF = cpf.replace(/\D/g, '');
+
+    if (sanitizedCPF.length !== 11) {
+        console.log('CPF inválido. Digite apenas os 11 números.');
+        process.exit(1);
+    }
+
+    return true;
+}
+
+//Validar senha
+function validarSenha(senha) {
+    return /^\d{6}$/.test(senha);
+}
+
+// Solicitar dados
+const nomeCompleto = readline.question('Digite seu nome completo: ');
+const cpf = readline.question('Digite seu CPF: ');
+const rg = readline.question('Digite seu RG: ');
+const email = readline.question('Digite seu e-mail: ');
+const dataNascimento = readline.question('Digite sua data de nascimento: ');
+const telefone = readline.question('Digite seu telefone com DDD: ');
+const usuario = readline.question('Digite um nome de usuário: ');
+const senha = readline.question('Digite uma senha: ');
+
+
+if (!validarCPF(cpf)) {
+    process.exit(1);
+}
+
+if (!validarSenha(senha)) {
+    console.log('Senha inválida. Digite exatamente 6 dígitos.');
+    process.exit(1);
+}
+
+// Mostrar os dados
+console.log('\nDados cadastrados:');
+console.log(`Nome completo: ${nomeCompleto}`);
+console.log(`CPF: ${cpf}`);
+console.log(`RG: ${rg}`);
+console.log(`E-mail: ${email}`);
+console.log(`Data de nascimento: ${dataNascimento}`);
+console.log(`Telefone: ${telefone}`);
+console.log(`Nome de usuário: ${usuario}`);
+console.log(`Senha: ${senha}`);
