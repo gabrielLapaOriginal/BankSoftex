@@ -8,7 +8,7 @@ const { transferirLimite } = require('./transferBank');
 const { visSaldo } = require('./visualizarSaldo');
 const { credito, aumentarLimite } = require('./limite')
 const { saque, deposito } = require('./saque.js')
-
+const contadorSaques = 0
 
 function bigSpacing() {
     console.log("\n".repeat(8)); 
@@ -33,7 +33,13 @@ function exibirOperacoesBasicas() {
             const produtosServicos = Number(readlineSync.question("Digite o número do que desejar: "));
             switch (produtosServicos) {
                 case 1:
-                saque(); //precisa de uma variavel para o parametro com o id do usuario logado
+                    if(contadorSaques > 2){
+                        console.error('Voce atingiu o limite de saques por login, por favor entre novamente.')
+                    }else{
+                        saque(); //precisa de uma variavel para o parametro com o id do usuario logado
+                        contadorSaques++
+                    }
+                
                 break
                 case 2:
                 deposito(); //precisa de uma variavel para o parametro com o id do usuario logado
