@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = './users.json';
-const readlineSync = require('readline-sync');
+const readline = require('readline-sync');
 
 const userIds = {};
 
@@ -90,45 +90,17 @@ function recuperarUsuarios(){
 // //recuperarUsuarios();
 
 
-// //verificando se usuario existe
-// function usuarioExiste(cpf){
-//     let users = recuperarUsuarios();
-//     users.forEach(user =>{
-//         //para cada objeto no array de objetos verifica se cpf já existe
-//         if (Object.keys(user,"cpf") == cpf){
-//             return true;
-//         }
-//     })
-//     return false;
-// }
-
-// //terminal de cadastro
-// function tCadastro(){
-//     const nome = String(readlineSync(`Área de cadastro de novos clientes\n
-//         Vamos começar a nos conhecer, por favor digite seu nome:\n`))
-
-//     let cpf = String(readlineSync(`Informe o seu cpf:\n`))
-
-//     console.log(`\nÓtimo, seja bem vindo ${nome}.
-//         \nSua nova conta está quase pronta...
-//         \nSeu limite inicial será 100R$, a qualquer momento você poderá pedir uma reavaliação do seu limite`)
-// //TODO: Importar e usar aqui a função de verificar cpf do loguin
-//     if (usuarioExiste(cpf)){
-//         console.log(`\nLamentamos, já existe um usuário cadastrado com o seguinte CPF: ${nome}\nOperação Finalizada`);
-//         //retorna para o menu inicial
-//         Inicial();
-
-//     }else{
-//         cadastroUsuario(nome, cpf);
-//     }
-// }
-// tCadastro();
-
-// // module.exports ={
-// //     recuperarUsuarios,
-////      tCadastro
-// // };
-
+//verificando se usuario existe
+function usuarioExiste(cpf){
+    const userData = JSON.parse(fs.readFileSync('users.json'));
+    usuarioexistente =  userData.find(usuario => usuario.cpf == cpf)
+    if (usuarioexistente){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
 
 const readline = require('readline-sync');
 
@@ -162,6 +134,11 @@ const senha = readline.question('Digite uma senha: ');
 
 
 if (!validarCPF(cpf)) {
+    process.exit(1);
+}
+
+if(usuarioExiste(cpf)){
+    console.log(`Já existe um usuário cadastrado com o CPF ${cpf}`)
     process.exit(1);
 }
 
