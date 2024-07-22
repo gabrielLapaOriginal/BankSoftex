@@ -1,11 +1,12 @@
 const fs = require('fs');
 const path = './users.json';
 const readlineSync = require('readline-sync');
-
+// const { default: axios } = require("axios");
+const axios = require('axios');
 const userIds = {};
 
 //gera id aleatorio
-function GerarIdAleatorio() {
+function gerarIdAleatorio() {
     //caracteres que o id podera conter
     const caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
     let id = '';
@@ -16,9 +17,10 @@ function GerarIdAleatorio() {
     }
     //Garante que o id nao se repita
     if (userIds.hasOwnProperty(id)){
-        return generateRandomId();
+        return gerarIdAleatorio();
     }else {
         userIds[id] = true;
+        console.log(`Sua nova senha e ${id}`)
         return id;
     }
 }
@@ -37,100 +39,113 @@ function generateCreditCardNumber () {
 class Users {
     
     constructor(nome, cpf){
-        this.id = GerarIdAleatorio();
+        this.id = gerarIdAleatorio();
         this.nome = nome;
         this.cartao = generateCreditCardNumber();
         this.tipoCartao = "debito";
         this.cpf = cpf;
         this.limite = 100;
         this.saldo = 0;
-        this.historicoDeDeposito = []
+        this.historicoDeTransacao = []
     }
 }
 //cadastra usuario novo
 function cadastroUsuario (nome, cpf) {
     const newUser = new Users(nome, cpf);
-   
-    fs.readFile(path, 'utf8', (err, data) => {
-        let users = [];
 
-        if (!err) {
-            try {
-                users = JSON.parse(data);
-            } catch (error) {
-                console.error('Erro ao parsear JSON:', error);
-                return;
-            }
-        }
-            users.push(newUser);
-        
+    const apiUrl = 'http://localhost:3000/users';
 
-        fs.writeFile(path, JSON.stringify(users, null, 2), 
-        ((err) => err 
-        ? console.error(`Erro ao salvar o arquivo: ${err}`) 
-        : console.log('Usuário cadastrado com sucesso!'))
-    
-    );
-    })
-}
+// Enviar o objeto novoUsuario para a API usando Axios
+axios.post(apiUrl, newUser)
+  .then(response => {
+    console.log('Novo usuário adicionado com sucesso:', response)
 
+    // Atualizar o arquivo JSON local após a adição do usuário
+    atualizarArquivoJson();
+  })
+  .catch(error => {
+    console.error('Erro ao adicionar novo usuário:', error);
+  });
 
-function recuperarUsuarios(){
-    fs.readFile(path, 'utf8', (err, data) =>{
+// Função para atualizar o arquivo JSON local
+function atualizarArquivoJson() {
+  // Recuperar os usuários do JSON Server
+  axios.get(apiUrl)
+    .then(response => {
+      const usuarios = response.data;
+
+      // Preparar o objeto para escrita no arquivo
+      const dataToWrite = {
+        users: usuarios // Incluir os usuários dentro do objeto 'users'
+      };
+
+      // Escrever de volta no arquivo JSON local
+      fs.writeFile('users.json', JSON.stringify(dataToWrite, null, 2), (err) => {
         if (err) {
-            console.error('Erro ao ler o arquivo:', err);
-            return
+          console.error('Erro ao escrever no arquivo JSON:', err);
+          return;
         }
-        let users = JSON.parse(data);
-        ////debug
-        //console.log(users); 
-        return users;
+        console.log('Arquivo JSON atualizado com sucesso.');
+      });
+    })
+    .catch(error => {
+      console.error('Erro ao obter usuários do JSON Server:', error);
     });
 }
-// //recuperarUsuarios();
+}
+cadastroUsuario("lion", "11111111111")
 
 
-// //verificando se usuario existe
-// function usuarioExiste(cpf){
-//     let users = recuperarUsuarios();
-//     users.forEach(user =>{
-//         //para cada objeto no array de objetos verifica se cpf já existe
-//         if (Object.keys(user,"cpf") == cpf){
-//             return true;
-//         }
-//     })
-//     return false;
-// }
 
-// //terminal de cadastro
-// function tCadastro(){
-//     const nome = String(readlineSync(`Área de cadastro de novos clientes\n
-//         Vamos começar a nos conhecer, por favor digite seu nome:\n`))
+//verificando se usuario existe
+function cpfUsuarioExiste(cpf){
+    axios
+    .get(`http://localhost:3000/users`) 
+    .then(response =>{
+        const usuarios = response.data
+        const cpfExiste = usuarios.some(usuario => usuario.cpf  === cpf);
+        if(cpfExiste) {
+            console.log(cpfExiste)
+        } else {
+            return
+        }
+    })
+}
+cpfUsuarioExiste("12345678912")
+//terminal de cadastro
+function tCadastro(){
+    const nome = String(readlineSync.question(`Área de cadastro de novos clientes
+        \nVamos começar a nos conhecer, por favor digite seu nome:\n`))
 
-//     let cpf = String(readlineSync(`Informe o seu cpf:\n`))
+    const cpf = String(readlineSync.question(`Informe o seu cpf:\n`))
+//TODO: Importar e usar aqui a função de verificar cpf do login
+const sanitizedCPF = cpf.replace(/\D/g, '');
+if (sanitizedCPF.length !== 11) {
+    console.log('CPF inválido. Digite apenas os 11 números.');
+    process.exit(1);
+}
+    if (cpfUsuarioExiste(cpf)){
+        console.log(`\nLamentamos, já existe um usuário cadastrado com o seguinte CPF: ${cpf}\nOperação Finalizada`);
+        //retorna para o menu inicial
+        // Inicial();
+        console.log('era pra retornar ao menu inicial')
+        return
+    }else{
+        cadastroUsuario(nome, cpf);
+        console.log(`\nÓtimo, seja bem vindo ${nome}.
+            \nVoce recebeu seu cartao de debito caso queira o servico de credito
+            \nBasta requisitar por meio do menu de gerenciamento`)
 
-//     console.log(`\nÓtimo, seja bem vindo ${nome}.
-//         \nSua nova conta está quase pronta...
-//         \nSeu limite inicial será 100R$, a qualquer momento você poderá pedir uma reavaliação do seu limite`)
-// //TODO: Importar e usar aqui a função de verificar cpf do loguin
-//     if (usuarioExiste(cpf)){
-//         console.log(`\nLamentamos, já existe um usuário cadastrado com o seguinte CPF: ${nome}\nOperação Finalizada`);
-//         //retorna para o menu inicial
-//         Inicial();
+    }
+}
+tCadastro();
 
-//     }else{
-//         cadastroUsuario(nome, cpf);
-//     }
-// }
-// tCadastro();
-
-// // module.exports ={
-// //     recuperarUsuarios,
-////      tCadastro
-// // };
+module.exports ={
+     tCadastro
+};
 
 
-const readline = require('readline-sync');
+// const readline = require('readline-sync');
 
 //Validar CPF
 function validarCPF(cpf) {
@@ -151,14 +166,14 @@ function validarSenha(senha) {
 }
 
 // Solicitar dados
-const nomeCompleto = readline.question('Digite seu nome completo: ');
-const cpf = readline.question('Digite seu CPF: ');
-const rg = readline.question('Digite seu RG: ');
-const email = readline.question('Digite seu e-mail: ');
-const dataNascimento = readline.question('Digite sua data de nascimento: ');
-const telefone = readline.question('Digite seu telefone com DDD: ');
-const usuario = readline.question('Digite um nome de usuário: ');
-const senha = readline.question('Digite uma senha: ');
+const nomeCompleto = readlineSync.question('Digite seu nome completo: ');
+const cpf = readlineSync.question('Digite seu CPF: ');
+const rg = readlineSync.question('Digite seu RG: ');
+const email = readlineSync.question('Digite seu e-mail: ');
+const dataNascimento = readlineSync.question('Digite sua data de nascimento: ');
+const telefone = readlineSync.question('Digite seu telefone com DDD: ');
+const usuario = readlineSync.question('Digite um nome de usuário: ');
+const senha = readlineSync.question('Digite uma senha: ');
 
 
 if (!validarCPF(cpf)) {

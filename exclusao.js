@@ -3,7 +3,7 @@ const readlineSync = require("readline-sync");
 //const fs = require("fs");
 const { default: axios } = require("axios");
 
-console.log("Bem vindo a exclusão de usuario\nInfelizmente voce esta nos deixando")
+console.log("Bem vindo a exclusão de usuario\nI nfelizmente voce esta nos deixando")
 const idUsuario = readlineSync.question(`Digite o seu id: `)
 
 function exclusao(id) {
@@ -13,3 +13,5 @@ function exclusao(id) {
 }
 
 exclusao(idUsuario);
+
+
