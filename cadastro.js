@@ -180,6 +180,11 @@ if (!validarCPF(cpf)) {
     process.exit(1);
 }
 
+if(usuarioExiste(cpf)){
+    console.log(`Já existe um usuário cadastrado com o CPF ${cpf}`)
+    process.exit(1);
+}
+
 if (!validarSenha(senha)) {
     console.log('Senha inválida. Digite exatamente 6 dígitos.');
     process.exit(1);
