@@ -1,6 +1,5 @@
 const fs = require('fs');
 const path = './users.json';
-const readlineSync = require('readline-sync');
 
 const userIds = {};
 
