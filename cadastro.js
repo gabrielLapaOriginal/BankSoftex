@@ -52,7 +52,7 @@ class Users {
 //cadastra usuario novo
 function cadastroUsuario (nome, cpf) {
     const newUser = new Users(nome, cpf);
-
+    console.log(newUser)
     const apiUrl = 'http://localhost:3000/users';
 
 // Enviar o objeto novoUsuario para a API usando Axios
@@ -93,7 +93,6 @@ function atualizarArquivoJson() {
     });
 }
 }
-cadastroUsuario("lion", "11111111111")
 
 
 
@@ -103,7 +102,7 @@ function cpfUsuarioExiste(cpf){
     .get(`http://localhost:3000/users`) 
     .then(response =>{
         const usuarios = response.data
-        const cpfExiste = usuarios.some(usuario => usuario.cpf  === cpf);
+        let cpfExiste = usuarios.some(usuario => usuario.cpf  === cpf);
         if(cpfExiste) {
             console.log(cpfExiste)
         } else {
@@ -111,7 +110,7 @@ function cpfUsuarioExiste(cpf){
         }
     })
 }
-cpfUsuarioExiste("12345678912")
+
 //terminal de cadastro
 function tCadastro(){
     const nome = String(readlineSync.question(`Área de cadastro de novos clientes
@@ -161,42 +160,42 @@ function validarCPF(cpf) {
 }
 
 //Validar senha
-function validarSenha(senha) {
-    return /^\d{6}$/.test(senha);
-}
+// function validarSenha(senha) {
+//     return /^\d{6}$/.test(senha);
+// }
 
-// Solicitar dados
-const nomeCompleto = readlineSync.question('Digite seu nome completo: ');
-const cpf = readlineSync.question('Digite seu CPF: ');
-const rg = readlineSync.question('Digite seu RG: ');
-const email = readlineSync.question('Digite seu e-mail: ');
-const dataNascimento = readlineSync.question('Digite sua data de nascimento: ');
-const telefone = readlineSync.question('Digite seu telefone com DDD: ');
-const usuario = readlineSync.question('Digite um nome de usuário: ');
-const senha = readlineSync.question('Digite uma senha: ');
+// // Solicitar dados
+// const nomeCompleto = readlineSync.question('Digite seu nome completo: ');
+// const cpf = readlineSync.question('Digite seu CPF: ');
+// const rg = readlineSync.question('Digite seu RG: ');
+// const email = readlineSync.question('Digite seu e-mail: ');
+// const dataNascimento = readlineSync.question('Digite sua data de nascimento: ');
+// const telefone = readlineSync.question('Digite seu telefone com DDD: ');
+// const usuario = readlineSync.question('Digite um nome de usuário: ');
+// const senha = readlineSync.question('Digite uma senha: ');
 
 
-if (!validarCPF(cpf)) {
-    process.exit(1);
-}
+// if (!validarCPF(cpf)) {
+//     process.exit(1);
+// }
 
-if(usuarioExiste(cpf)){
-    console.log(`Já existe um usuário cadastrado com o CPF ${cpf}`)
-    process.exit(1);
-}
+// if(usuarioExiste(cpf)){
+//     console.log(`Já existe um usuário cadastrado com o CPF ${cpf}`)
+//     process.exit(1);
+// }
 
-if (!validarSenha(senha)) {
-    console.log('Senha inválida. Digite exatamente 6 dígitos.');
-    process.exit(1);
-}
+// if (!validarSenha(senha)) {
+//     console.log('Senha inválida. Digite exatamente 6 dígitos.');
+//     process.exit(1);
+// }
 
-// Mostrar os dados
-console.log('\nDados cadastrados:');
-console.log(`Nome completo: ${nomeCompleto}`);
-console.log(`CPF: ${cpf}`);
-console.log(`RG: ${rg}`);
-console.log(`E-mail: ${email}`);
-console.log(`Data de nascimento: ${dataNascimento}`);
-console.log(`Telefone: ${telefone}`);
-console.log(`Nome de usuário: ${usuario}`);
-console.log(`Senha: ${senha}`);
+// // Mostrar os dados
+// console.log('\nDados cadastrados:');
+// console.log(`Nome completo: ${nomeCompleto}`);
+// console.log(`CPF: ${cpf}`);
+// console.log(`RG: ${rg}`);
+// console.log(`E-mail: ${email}`);
+// console.log(`Data de nascimento: ${dataNascimento}`);
+// console.log(`Telefone: ${telefone}`);
+// console.log(`Nome de usuário: ${usuario}`);
+// console.log(`Senha: ${senha}`);
