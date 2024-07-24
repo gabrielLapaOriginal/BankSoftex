@@ -32,12 +32,10 @@ function transferirLimite() {
     const dataToWrite = {
         users: usuarios // Incluir os usuários dentro do objeto 'users'
       };
-
-    
-    
+   
 fs.writeFileSync('users.json', JSON.stringify(dataToWrite));
   
-    console.log(`Transferência de R$ ${valor} realizada com sucesso!`);
+console.log(`Transferência de R$ ${valor} realizada com sucesso!`);
 })
     
   
