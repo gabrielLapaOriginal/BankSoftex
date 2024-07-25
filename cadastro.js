@@ -46,52 +46,29 @@ class Users {
         this.cpf = cpf;
         this.limite = 100;
         this.saldo = 0;
-        this.historicoDeTransacao = []
     }
 }
 //cadastra usuario novo
 function cadastroUsuario (nome, cpf) {
     const newUser = new Users(nome, cpf);
-    console.log(newUser)
     const apiUrl = 'http://localhost:3000/users';
+    const transHistory = 'http://localhost:3000/transactions'
 
 // Enviar o objeto novoUsuario para a API usando Axios
 axios.post(apiUrl, newUser)
-  .then(response => {
-    console.log('Novo usuário adicionado com sucesso:', response)
-
-    // Atualizar o arquivo JSON local após a adição do usuário
-    atualizarArquivoJson();
+  .then(() => {
+    console.log('Novo usuário adicionado com sucesso:')
   })
   .catch(error => {
     console.error('Erro ao adicionar novo usuário:', error);
   });
+  const newUserHistory = {id: newUser.id, transacao: [], valor: []}
 
-// Função para atualizar o arquivo JSON local
-function atualizarArquivoJson() {
-  // Recuperar os usuários do JSON Server
-  axios.get(apiUrl)
-    .then(response => {
-      const usuarios = response.data;
+  axios.post(transHistory, newUserHistory)
+  .catch(error => {
+    console.error('Erro ao adicionar novo usuário:', error);
+  });
 
-      // Preparar o objeto para escrita no arquivo
-      const dataToWrite = {
-        users: usuarios // Incluir os usuários dentro do objeto 'users'
-      };
-
-      // Escrever de volta no arquivo JSON local
-      fs.writeFile('users.json', JSON.stringify(dataToWrite, null, 2), (err) => {
-        if (err) {
-          console.error('Erro ao escrever no arquivo JSON:', err);
-          return;
-        }
-        console.log('Arquivo JSON atualizado com sucesso.');
-      });
-    })
-    .catch(error => {
-      console.error('Erro ao obter usuários do JSON Server:', error);
-    });
-}
 }
 
 
@@ -121,7 +98,7 @@ function tCadastro(){
 const sanitizedCPF = cpf.replace(/\D/g, '');
 if (sanitizedCPF.length !== 11) {
     console.log('CPF inválido. Digite apenas os 11 números.');
-    process.exit(1);
+    cpf = String(readlineSync.question(`Informe o seu cpf:\n`))
 }
     if (cpfUsuarioExiste(cpf)){
         console.log(`\nLamentamos, já existe um usuário cadastrado com o seguinte CPF: ${cpf}\nOperação Finalizada`);
@@ -132,8 +109,7 @@ if (sanitizedCPF.length !== 11) {
     }else{
         cadastroUsuario(nome, cpf);
         console.log(`\nÓtimo, seja bem vindo ${nome}.
-            \nVoce recebeu seu cartao de debito caso queira o servico de credito
-            \nBasta requisitar por meio do menu de gerenciamento`)
+            \nVoce recebeu seu cartao de debito caso queira o servico de credito\nBasta requisitar por meio do menu de gerenciamento`)
 
     }
 }
@@ -142,60 +118,3 @@ tCadastro();
 module.exports ={
      tCadastro
 };
-
-
-// const readline = require('readline-sync');
-
-//Validar CPF
-function validarCPF(cpf) {
-    // Tira os caracteres q n forem números
-    const sanitizedCPF = cpf.replace(/\D/g, '');
-
-    if (sanitizedCPF.length !== 11) {
-        console.log('CPF inválido. Digite apenas os 11 números.');
-        process.exit(1);
-    }
-
-    return true;
-}
-
-//Validar senha
-// function validarSenha(senha) {
-//     return /^\d{6}$/.test(senha);
-// }
-
-// // Solicitar dados
-// const nomeCompleto = readlineSync.question('Digite seu nome completo: ');
-// const cpf = readlineSync.question('Digite seu CPF: ');
-// const rg = readlineSync.question('Digite seu RG: ');
-// const email = readlineSync.question('Digite seu e-mail: ');
-// const dataNascimento = readlineSync.question('Digite sua data de nascimento: ');
-// const telefone = readlineSync.question('Digite seu telefone com DDD: ');
-// const usuario = readlineSync.question('Digite um nome de usuário: ');
-// const senha = readlineSync.question('Digite uma senha: ');
-
-
-// if (!validarCPF(cpf)) {
-//     process.exit(1);
-// }
-
-// if(usuarioExiste(cpf)){
-//     console.log(`Já existe um usuário cadastrado com o CPF ${cpf}`)
-//     process.exit(1);
-// }
-
-// if (!validarSenha(senha)) {
-//     console.log('Senha inválida. Digite exatamente 6 dígitos.');
-//     process.exit(1);
-// }
-
-// // Mostrar os dados
-// console.log('\nDados cadastrados:');
-// console.log(`Nome completo: ${nomeCompleto}`);
-// console.log(`CPF: ${cpf}`);
-// console.log(`RG: ${rg}`);
-// console.log(`E-mail: ${email}`);
-// console.log(`Data de nascimento: ${dataNascimento}`);
-// console.log(`Telefone: ${telefone}`);
-// console.log(`Nome de usuário: ${usuario}`);
-// console.log(`Senha: ${senha}`);
