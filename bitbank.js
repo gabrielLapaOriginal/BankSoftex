@@ -25,3 +25,4 @@ console.log(line7+"\n"+line6+"\n"+line5+"\n"+line4+"\n"+line3+"\n"+line2+"\n"+li
 console.log(line8+"\n"+line7+"\n"+line6+"\n"+line5+"\n"+line4+"\n"+line3+"\n"+line2+"\n"+line1)
 console.log(line9+"\n"+line8+"\n"+line7+"\n"+line6+"\n"+line5+"\n"+line4+"\n"+line3+"\n"+line2+"\n"+line1)
 console.log(line10+"\n"+line9+"\n"+line8+"\n"+line7+"\n"+line6+"\n"+line5+"\n"+line4+"\n"+line3+"\n"+line2+"\n"+line1)
+//
