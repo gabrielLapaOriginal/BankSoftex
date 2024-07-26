@@ -32,7 +32,7 @@ const gerarExtrato = async (usuarioId) => {
     // Formatando as transações
     let extrato = `
 --------------------------------------------------
-                   Banco XYZ
+                     Bitbank
 --------------------------------------------------
 Data        Descrição             Valor(R$)
 --------------------------------------------------\n`;
@@ -61,6 +61,9 @@ Saldo Atual:                      ${formatarValor(usuario.saldo)}
     console.error('Erro ao gerar o extrato:', error);
   }
 };
-gerarExtrato('xG31t2YhD9')
+// gerarExtrato('xG31t2YhD9')
 
 // gerarExtrato('ukIcZpX2c8'); 
+module.exports = {
+  gerarExtrato
+};

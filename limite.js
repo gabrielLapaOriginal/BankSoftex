@@ -4,7 +4,7 @@ const axios = require('axios');
 const apiUrl = 'http://localhost:3000/users';
 
 
-function credito() {
+function credito(id) {
   
   // Carregar dados do arquivo JSON
   axios.get(apiUrl)
@@ -17,7 +17,7 @@ function credito() {
 
   if (!usuarioOrigem || usuarioOrigem.tipoCartao == "credito") {
     console.error('Seu usuario nao existe ou ja possui cartao de credito');
-  } else {
+  } else if (usuarioOrigem.id === id) {
     const updatedUser = {tipoCartao: "credito", limite: 100}
   axios.patch(`${apiUrl}/${usuarioOrigem.id}`, updatedUser)
   .then(response => {
@@ -27,11 +27,13 @@ function credito() {
     console.error('Erro ao atualizar o usuário:', error);
   });
 
+  }else{
+    throw new Error("ID incorreto")
   }
 })
 }
 
-function aumentarLimite() {
+function aumentarLimite(id) {
   // Carregar dados do arquivo JSON
   axios.get(apiUrl)
   .then(response => {
@@ -42,7 +44,7 @@ function aumentarLimite() {
   // verificar cartao
   if (!usuarioOrigem || usuarioOrigem.tipoCartao == "debito") {
     console.error('Seu usuario nao existe ou nao possui cartao de credito');
-  } else {
+  } else if (usuarioOrigem.id === id){
     const updatedUser = { limite: usuarioOrigem.saldo }
     axios.patch(`${apiUrl}/${usuarioOrigem.id}`, updatedUser)
     .then(response => {console.log(`O seu limite foi aumentado para R$ ${updatedUser.limite}`);
@@ -50,7 +52,8 @@ function aumentarLimite() {
     .catch(error => {
       console.error('Erro ao atualizar o usuário:', error);
     });
-
+  } else{
+    throw new Error("ID incorreto")
   }
 })
 }

@@ -73,7 +73,7 @@ console.log(`Transferência de R$ ${valor} realizada com sucesso!`);
 })
 
   }
-  transferirLimite('xG31t2YhD9')
+  // transferirLimite('xG31t2YhD9')
 
   module.exports = {
     transferirLimite

@@ -12,7 +12,7 @@ function visSaldo(userId){
     console.log(`Seu saldo atual e de R$ ${usuarioOrigem.saldo}`)
   })
 }
-visSaldo('xG31t2YhD9')
+// visSaldo('xG31t2YhD9')
 module.exports = {
     visSaldo
 }

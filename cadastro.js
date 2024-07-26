@@ -1,7 +1,4 @@
-const fs = require('fs');
-const path = './users.json';
 const readlineSync = require('readline-sync');
-// const { default: axios } = require("axios");
 const axios = require('axios');
 const userIds = {};
 
@@ -90,8 +87,8 @@ function cpfUsuarioExiste(cpf){
 
 //terminal de cadastro
 function tCadastro(){
-    const nome = String(readlineSync.question(`Área de cadastro de novos clientes
-        \nVamos começar a nos conhecer, por favor digite seu nome:\n`))
+    const nome = String(readlineSync.question(`Area de cadastro de novos clientes
+        \nVamos comecar a nos conhecer, por favor digite seu nome:\n`))
 
     const cpf = String(readlineSync.question(`Informe o seu cpf:\n`))
 //TODO: Importar e usar aqui a função de verificar cpf do login
@@ -113,7 +110,7 @@ if (sanitizedCPF.length !== 11) {
 
     }
 }
-tCadastro();
+
 
 module.exports ={
      tCadastro

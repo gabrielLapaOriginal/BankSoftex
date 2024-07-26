@@ -13,10 +13,19 @@
       "id": "xG31t2YhD9",
       "nome": "Gabriel",
       "cartao": "3353312630641964",
-      "tipoCartao": "debito",
+      "tipoCartao": "credito",
       "cpf": "09256678462",
-      "limite": 0,
+      "limite": 100,
       "saldo": 2000
+    },
+    {
+      "id": "oFetMZISV1",
+      "nome": "L",
+      "cartao": "6385341474131672",
+      "tipoCartao": "debito",
+      "cpf": "00000000000",
+      "limite": 100,
+      "saldo": 0
     }
   ],
   "transactions": [
@@ -43,6 +52,11 @@
         -200,
         500
       ]
+    },
+    {
+      "id": "oFetMZISV1",
+      "transacao": [],
+      "valor": []
     }
   ]
 }
