@@ -55,7 +55,7 @@ async function login (){
         console.log(errorMessage);
     }
 }
-categoria()
+
 }
 
 function categoria() {
