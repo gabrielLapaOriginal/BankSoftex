@@ -1,72 +1,47 @@
+//FUNCAO DE TRANSFERENCIA ANTIGA 
 const readlineSync = require('readline-sync');
+const fs = require('fs');
 const axios = require('axios');
 
-const apiUrl = 'http://localhost:3000/users';
-const transHistory = 'http://localhost:3000/transactions'
-const axiosConfig = {
-  timeout: 5000}
 
 function transferirLimite() {
+    const apiUrl = 'http://localhost:3000/users';
     // Carregar dados do arquivo JSON
-    axios.get(apiUrl, axiosConfig)
-    .then(usersResponse => {
-      const usuarios = usersResponse.data; // acessando os dados da resposta de usuários
-      
-      axios.get(transHistory, axiosConfig)
-        .then(transactionsResponse => {
-          const transacoes = transactionsResponse.data; // acessando os dados da resposta de transações
-
+    axios.get(apiUrl)
+    .then(response => {
+    const usuarios = response.data;
     
     // Receber os valores
-    const idOrigem = readlineSync.question(`Confirme o seu id: `)
+    const cpfOrigem = readlineSync.question(`Digite o seu cpf: `)
     const cpfDestino = readlineSync.question(`Digite o cpf pra qual ira enviar o dinheiro: `)
     const valor = Number(readlineSync.question("Digite o valor da transferencia: "))
     
     // Procurar os usuários no json
-    const usuarioOrigem = usuarios.find((usuario) => usuario.id === idOrigem);
-    const usuarioDestino = usuarios.find((usuario) => usuario.cpf === cpfDestino);
-    
-    const transOrigem = transacoes.find((trans) => trans.id === idOrigem);
-    const transDestino = transacoes.find((trans) => trans.id === usuarioDestino.id);
+    usuarioOrigem = usuarios.find((usuario) => usuario.cpf === cpfOrigem);
+    usuarioDestino = usuarios.find((usuario) => usuario.cpf === cpfDestino);
   
     // Validar se os usuários existem e se o valor é válido
     if (!usuarioOrigem || !usuarioDestino || valor <= 0 || valor > usuarioOrigem.saldo) {
-      return console.error('Transferência inválida!');
+      console.error('Transferência inválida!');
     }
   
     // Atualizar saldos dos usuários
     usuarioOrigem.saldo -= valor;
     usuarioDestino.saldo += valor;
-
-    if (transOrigem) {
-      transOrigem.transacao.push('Transferência');
-      transOrigem.valor.push(-valor);
-    }
-
-    // Adicionar transação para usuário destino
-    if (transDestino) {
-      transDestino.transacao.push('Valor recebido');
-      transDestino.valor.push(valor);
-    }
-
-    axios.all([
-      axios.put(`${apiUrl}/${usuarioOrigem.id}`, usuarioOrigem, axiosConfig),
-      axios.put(`${apiUrl}/${usuarioDestino.id}`, usuarioDestino, axiosConfig),
-      axios.put(`${transHistory}/${idOrigem}`, transOrigem, axiosConfig),
-      axios.put(`${transHistory}/${transDestino.id}`, transDestino, axiosConfig)
-  ])
-  .then(axios.spread(() => {
-      console.log(`Transferência de R$ ${valor} realizada com sucesso!`);
-  }))
-  .catch(error => {
-      console.error('Erro ao atualizar dados no servidor:', error);
-  });
-
-console.log(`Transferência de R$ ${valor} realizada com sucesso!`);
+    
+    // Preparar o objeto para escrita no arquivo
+    const dataToWrite = {
+        users: usuarios // Incluir os usuários dentro do objeto 'users'
+      };
+   
+fs.writeFileSync('users.json', JSON.stringify(dataToWrite));
   
-  })
+console.log(`Transferência de R$ ${valor} realizada com sucesso!`);
 })
-
+    
+  
+    // Salvar alterações no arquivo JSON
+    
   }
   transferirLimite()
 

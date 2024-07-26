@@ -10,9 +10,8 @@ function credito() {
   axios.get(apiUrl)
   .then(response => {
   const usuarios = response.data;
-
-  const cpfOrigem = readlineSync.question(`Confirme o seu cpf: `)
-  const usuarioOrigem = usuarios.find((usuario) => usuario.cpf === cpfOrigem);
+  const idOrigem = readlineSync.question(`Confirme o seu id: `)
+   usuarioOrigem = usuarios.find((usuario) => usuario.id === idOrigem);
 
   // verificar cartao
 
@@ -37,8 +36,8 @@ function aumentarLimite() {
   axios.get(apiUrl)
   .then(response => {
   const usuarios = response.data;
-  const cpfOrigem = readlineSync.question(`Digite o seu cpf: `)
-  usuarioOrigem = usuarios.find((usuario) => usuario.cpf === cpfOrigem);
+  const idOrigem = readlineSync.question(`Confirme o seu id: `)
+  usuarioOrigem = usuarios.find((usuario) => usuario.id === idOrigem);
 
   // verificar cartao
   if (!usuarioOrigem || usuarioOrigem.tipoCartao == "debito") {
@@ -55,7 +54,7 @@ function aumentarLimite() {
   }
 })
 }
-credito()
+
 module.exports = {
   credito,
   aumentarLimite
