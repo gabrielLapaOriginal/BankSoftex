@@ -186,30 +186,3 @@ function bigSpacing() {
 function smallSpacing() {
     console.log("\n\n"); 
 }
-// Função para exibir opções de outras funcionalidades
-// function exibirOutrasFuncionalidades() {
-    //     bigSpacing();
-    //     console.log("Outras Funcionalidades: \n" +
-    //                 "1- Gerenciamento de Limites \n" + 
-    //                 "2- Investimentos \n" +
-    //                 "3- Alertas e Notificações");
-                
-//                 const outrasFuncionalidades = Number(readlineSync.question("Digite o número do que desejar: "));
-//             switch (outrasFuncionalidades) {
-    //                 case 1:
-    //                 smallSpacing()
-    //                 aumentarLimite();
-    //                 break;
-    //         // Outros casos para produtos e serviços...
-    //             default:
-    //                 console.log("Opção inválida.");
-    //             break;
-    //     }
-    // }
-
-// Função principal para exibir o menu e processar a entrada do usuário
-
-
-
-
-

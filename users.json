@@ -16,16 +16,7 @@
       "tipoCartao": "credito",
       "cpf": "09256678462",
       "limite": 100,
-      "saldo": 2000
-    },
-    {
-      "id": "oFetMZISV1",
-      "nome": "L",
-      "cartao": "6385341474131672",
-      "tipoCartao": "debito",
-      "cpf": "00000000000",
-      "limite": 100,
-      "saldo": 0
+      "saldo": 2100
     }
   ],
   "transactions": [
@@ -45,18 +36,15 @@
       "transacao": [
         "Transferência",
         "Transferência",
-        "deposito"
+        "deposito",
+        "saque"
       ],
       "valor": [
         -100,
         -200,
-        500
+        500,
+        -50
       ]
-    },
-    {
-      "id": "oFetMZISV1",
-      "transacao": [],
-      "valor": []
     }
   ]
 }

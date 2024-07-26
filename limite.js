@@ -1,11 +1,11 @@
 const readlineSync = require('readline-sync');
 const axios = require('axios');
 
-const apiUrl = 'http://localhost:3000/users';
+
 
 
 function credito(id) {
-  
+  const apiUrl = 'http://localhost:3000/users';
   // Carregar dados do arquivo JSON
   axios.get(apiUrl)
   .then(response => {

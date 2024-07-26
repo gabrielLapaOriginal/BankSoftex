@@ -1,11 +1,12 @@
 const axios = require('axios');
-const apiUrl = 'http://localhost:3000'
 
 // Função para formatar o valor com duas casas decimais
 const formatarValor = (valor) => valor.toFixed(2).replace('.', ',');
 
 // Função para gerar o extrato
 const gerarExtrato = async (usuarioId) => {
+  const apiUrl = 'http://localhost:3000'
+
   try {
     // Buscar os dados dos usuários e transações
     const [usuariosResponse, transacoesResponse] = await Promise.all([

@@ -1,9 +1,9 @@
 const axios = require('axios');
-const apiUrl = 'http://localhost:3000/users';
+
 
 
 function visSaldo(userId){
-
+  const apiUrl = 'http://localhost:3000/users';
     axios.get(apiUrl)
     .then(response => {
     const usuarios = response.data;
