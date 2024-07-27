@@ -13,9 +13,9 @@
       "id": "xG31t2YhD9",
       "nome": "Gabriel",
       "cartao": "3353312630641964",
-      "tipoCartao": "credito",
+      "tipoCartao": "debito",
       "cpf": "09256678462",
-      "limite": 100,
+      "limite": 0,
       "saldo": 2100
     }
   ],

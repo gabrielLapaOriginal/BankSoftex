@@ -59,7 +59,6 @@ function deposito(userId){
 }
 // funcao para atualizar a tabela transactions
 const attTransactions = async (id, tipoTransacao, valor) =>{
-
      const transacoesResponse = await axios.get(transHistory)
      transacoes = transacoesResponse.data
     const transacaoUsuario = transacoes.find(trans => trans.id === id)
