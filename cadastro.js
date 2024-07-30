@@ -1,9 +1,15 @@
-const fs = require('fs');
-const path = './users.json';
-const readlineSync = require('readline-sync');
+import chalk from 'chalk';
+import fs from 'fs';
+import readlineSync from 'readline-sync';
+import axios from 'axios';
+import terminalImage  from "terminal-image";
+
 // const { default: axios } = require("axios");
-const axios = require('axios');
+const path = './users.json';
 const userIds = {};
+
+//logo
+console.log(await terminalImage.file('bitbank.png', {width: '50%', height: '50%'}));
 
 //gera id aleatorio
 function gerarIdAleatorio() {
@@ -20,7 +26,7 @@ function gerarIdAleatorio() {
         return gerarIdAleatorio();
     }else {
         userIds[id] = true;
-        console.log(`Sua nova senha e ${id}`)
+        console.log(chalk.blue(`Sua nova senha e ${chalk.bgGreenBright.black(id)}`))
         return id;
     }
 }
@@ -57,16 +63,16 @@ function cadastroUsuario (nome, cpf) {
 // Enviar o objeto novoUsuario para a API usando Axios
 axios.post(apiUrl, newUser)
   .then(() => {
-    console.log('Novo usuário adicionado com sucesso:')
+    console.log(chalk.green('Novo usuário adicionado com sucesso:'));
   })
   .catch(error => {
-    console.error('Erro ao adicionar novo usuário:', error);
+    console.error(chalk.red('Erro ao adicionar novo usuário:', error));
   });
   const newUserHistory = {id: newUser.id, transacao: [], valor: []}
 
   axios.post(transHistory, newUserHistory)
   .catch(error => {
-    console.error('Erro ao adicionar novo usuário:', error);
+    console.error(chalk.red('Erro ao adicionar novo usuário:', error));
   });
 
 }
@@ -90,26 +96,27 @@ function cpfUsuarioExiste(cpf){
 
 //terminal de cadastro
 function tCadastro(){
-    const nome = String(readlineSync.question(`Área de cadastro de novos clientes
-        \nVamos começar a nos conhecer, por favor digite seu nome:\n`))
+    const nome = String(readlineSync.question(
+        `${chalk.cyan.bold('Area de cadastro de novos clientes')}\n\n${chalk.cyan('Vamos comecar a nos conhecer, por favor ')}${chalk.bgCyanBright.black('digite seu nome:')}\n`
+    ));
 
     const cpf = String(readlineSync.question(`Informe o seu cpf:\n`))
 //TODO: Importar e usar aqui a função de verificar cpf do login
 const sanitizedCPF = cpf.replace(/\D/g, '');
 if (sanitizedCPF.length !== 11) {
-    console.log('CPF inválido. Digite apenas os 11 números.');
+    console.log(chalk.red('CPF inválido. Digite apenas os 11 números.'));
     cpf = String(readlineSync.question(`Informe o seu cpf:\n`))
 }
     if (cpfUsuarioExiste(cpf)){
-        console.log(`\nLamentamos, já existe um usuário cadastrado com o seguinte CPF: ${cpf}\nOperação Finalizada`);
+        console.log(chalk.red(`\nLamentamos, já existe um usuário cadastrado com o seguinte CPF: ${cpf}\nOperação Finalizada`));
         //retorna para o menu inicial
         // Inicial();
         console.log('era pra retornar ao menu inicial')
         return
     }else{
         cadastroUsuario(nome, cpf);
-        console.log(`\nÓtimo, seja bem vindo ${nome}.
-            \nVoce recebeu seu cartao de debito caso queira o servico de credito\nBasta requisitar por meio do menu de gerenciamento`)
+        console.log(chalk.green(`\nÓtimo, seja bem vindo ${chalk.bold(nome)}.
+            \nVoce recebeu seu cartao de debito caso queira o servico de credito\nBasta requisitar por meio do menu de gerenciamento`))
 
     }
 }
